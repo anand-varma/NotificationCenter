@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <properties>
+        <property name="log-path">logs</property>
+    </properties>
+
+    <Appenders>
+        <Console name="console-log" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </Console>
+        <RollingFile name="trace-log" fileName="${log-path}/consumerapis-trace.log"
+                     filePattern="${log-path}/consumerapis-trace-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="true" />
+            </Policies>
+
+        </RollingFile>
+        <RollingFile name="debug-log" fileName="${log-path}/consumerapis-debug.log"
+                     filePattern="${log-path}/consumerapis-debug-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="true" />
+            </Policies>
+
+        </RollingFile>
+
+        <RollingFile name="error-log" fileName="${log-path}/consumerapis-error.log"
+                     filePattern="${log-path}/consumerapis-error-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="true" />
+            </Policies>
+
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.brauz" level="debug" additivity="false">
+            <appender-ref ref="trace-log" level="debug"/>
+            <appender-ref ref="error-log" level="error"/>
+            <appender-ref ref="console-log" level="debug"/>
+        </Logger>
+        <Logger name="org.hibernate" level="debug">
+            <appender-ref ref="trace-log" level="debug"/>
+            <appender-ref ref="error-log" level="error"/>
+            <appender-ref ref="console-log" level="debug"/>
+        </Logger>
+        <Root level="info" additivity="false">
+            <appender-ref ref="console-log" />
+        </Root>
+    </Loggers>
+
+
+
+</configuration>
